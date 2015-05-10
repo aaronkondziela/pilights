@@ -1,0 +1,6 @@
+
+# system crontab entries for pilights lighting control
+# m h dom mon dow user	command
+* * * * * root cd /home/pi && /home/pi/auto-lights > /home/pi/auto-lights.output
+0 0 * * * root cd /home/pi && /home/pi/get-solar-astronomy > /dev/null
+
