@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+#
+# (c)2015 Aaron Kondziela <aaron@aaronkondziela.com>
+# Distributed under the MIT License
+#
+
+FILE=/home/pi/sunrise-sunset.data
+
+# Yahoo gives it to you in local time, so twiddle TZ for date command
+export TZ="America/New_York"
+
+SUNRISE=`date --date="$(cat $FILE | awk -F\" '{print $2}')" +%s`
+SUNSET=`date --date="$(cat $FILE | awk -F\" '{print $4}')" +%s`
+
+# Reset TZ back to a nice sane UTC
+export TZ=""
+
+NOW=`date +%s`
+
+if (( $NOW > $SUNRISE && $NOW < $SUNSET )) ; then
+	echo Sun is UP
+	exit 0
+else
+	echo Sun is DOWN
+	exit 1
+fi

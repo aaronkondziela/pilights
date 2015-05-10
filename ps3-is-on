@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+#
+# (c)2015 Aaron Kondziela <aaron@aaronkondziela.com>
+# Distributed under the MIT License
+#
+
+# Detect if PS3 is powered on on the network
+# return via exit code and hew-mon readable text
+
+# A8:E3:EE is a MAC vendor ID for Sony Computer Entertainment
+IP=$(arp -an | grep -i A8:E3:EE | awk -F'\(|\)' '{print $2}')
+
+# Give me a ping, Vasili. One ping only please.
+if ping -w1 -W1 -c1 -q "$IP" 1>/dev/null 2>&1
+then
+	echo ps3 is ON
+	exit 0
+else
+	echo ps3 is OFF
+	exit 1
+fi

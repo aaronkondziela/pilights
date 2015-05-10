@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+#
+# (c)2015 Aaron Kondziela <aaron@aaronkondziela.com>
+# Distributed under the MIT License
+#
+
+# Uses Yahoo Weather to get sunrise and sunset data.
+# Go to http://weather.yahoo.com/ and look up your location.
+# The last numbers in the URL will be the $LOC - set it below
+
+LOC=12761354
+
+FILE=/home/pi/sunrise-sunset.data
+
+curl -s "http://weather.yahooapis.com/forecastrss?w=$LOC" | grep astronomy > "$FILE"

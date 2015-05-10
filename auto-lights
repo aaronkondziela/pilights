@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+#
+# (c)2015 Aaron Kondziela <aaron@aaronkondziela.com>
+# Distributed under the MIT License
+#
+
+# This runs once per minute via crontab, and implements the
+# rules for lighting control based on polled state sense inputs
+# and state change output triggers. Conversion to full messaging
+# system and rules engine TBD perhaps.
+
+if ./sun-just-set ; then
+	./color-lights-on
+	./white-lights-on
+	exit
+fi
+
+if ./sun-just-rose ; then
+	./color-lights-off
+	./white-lights-off
+	exit
+fi
+
+if ./ps3-is-on ; then
+	./white-lights-off
+	exit
+fi
+
+#elif ./sun-is-down && ./ps3-is-off ; then
+#	./white-lights-on
+#	exit
+#fi
